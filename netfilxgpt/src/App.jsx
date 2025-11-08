@@ -1,11 +1,9 @@
-import './App.css'
+import Body from './components/Body'
 
 function App() {
 
   return (
-    <>
-      <p className='text-amber-500 text-2xl bg-amber-700'>Hello</p>
-    </>
+    <Body/>
   )
 }
 
