@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -7,6 +8,10 @@ const Login = () => {
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
   };
+
+  const handleButtonClick = () => {
+    checkValidData(email,password)
+  }
 
   return (
     <div className="relative w-full h-screen">
@@ -57,6 +62,7 @@ const Login = () => {
             <button
               type="submit"
               className="bg-red-600 hover:bg-red-700 rounded py-3 font-semibold mt-2 transition-all duration-200 text-sm sm:text-base"
+              onClick={handleButtonClick}
             >
               {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
