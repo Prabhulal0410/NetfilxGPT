@@ -14,7 +14,6 @@ const Login = () => {
 
   const handleButtonClick = (e) => {
     e.preventDefault();
-
     const validationErrors = checkValidData(
       name.current?.value,
       email.current.value,
@@ -110,7 +109,7 @@ const Login = () => {
           {/* Remember Me + Help (Netflix Style) */}
           <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="accent-red-600" />
+              <input type="checkbox" className="accent-red-500" />
               <span>Remember me</span>
             </label>
             <a href="#" className="hover:underline">
