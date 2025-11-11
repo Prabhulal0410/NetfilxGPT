@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -14,14 +19,47 @@ const Login = () => {
 
   const handleButtonClick = (e) => {
     e.preventDefault();
-    const validationErrors = checkValidData(
-      name.current?.value,
-      email.current.value,
-      password.current.value,
-      isSignInForm
-    );
 
-    setErrors(validationErrors || {});
+    const validationErrors =
+      checkValidData(
+        name.current?.value,
+        email.current.value,
+        password.current.value,
+        isSignInForm
+      ) || {}; 
+
+    setErrors(validationErrors);
+    console.log("Validation errors:", validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
+
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          console.log("✅ Signed up user:", userCredential.user);
+        })
+        .catch((error) => {
+          console.error("❌ Signup error:", error);
+          setErrors({ firebase: error.message });
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          console.log("✅ Signed in user:", userCredential.user);
+        })
+        .catch((error) => {
+          console.error("❌ Signin error:", error);
+          setErrors({ firebase: error.message });
+        });
+    }
   };
 
   return (
@@ -96,6 +134,13 @@ const Login = () => {
               )}
             </div>
 
+            {/* 🔥 Firebase error message */}
+            {errors.firebase && (
+              <p className="text-red-500 text-sm mt-3 text-center">
+                {errors.firebase}
+              </p>
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
@@ -144,7 +189,8 @@ const Login = () => {
 
           {/* ReCAPTCHA Text */}
           <p className="text-xs text-gray-500 mt-6 text-center leading-relaxed">
-            This page is protected by Google reCAPTCHA to ensure you're not a bot.{" "}
+            This page is protected by Google reCAPTCHA to ensure you're not a
+            bot.{" "}
             <span className="text-blue-400 hover:underline cursor-pointer">
               Learn more.
             </span>
@@ -156,6 +202,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
