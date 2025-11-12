@@ -13,7 +13,7 @@
     }
 
     // Password validation (show one message at a time)
-    if (password.length < 6) {
+    if (password.length < 4) {
         errors.password = "Password must be at least 6 characters long.";
     } else if (!/[A-Z]/.test(password)) {
         errors.password = "Password must contain at least one uppercase letter.";
