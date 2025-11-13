@@ -6,10 +6,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const name = useRef(null);
   const email = useRef(null);
@@ -26,7 +28,7 @@ const Login = () => {
         email.current.value,
         password.current.value,
         isSignInForm
-      ) || {}; 
+      ) || {};
 
     setErrors(validationErrors);
     console.log("Validation errors:", validationErrors);
@@ -34,6 +36,7 @@ const Login = () => {
     if (Object.keys(validationErrors).length > 0) return;
 
     if (!isSignInForm) {
+      // 🔹 Sign Up
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -41,12 +44,18 @@ const Login = () => {
       )
         .then((userCredential) => {
           console.log("✅ Signed up user:", userCredential.user);
+          navigate("/Browse"); // ✅ Moved inside .then
         })
         .catch((error) => {
-          console.error("❌ Signup error:", error);
+          if (error.code === "auth/email-already-in-use") {
+            alert("This email is already registered. Please sign in instead.");
+          } else {
+            console.error("Signup error:", error.message);
+          }
           setErrors({ firebase: error.message });
         });
     } else {
+      // 🔹 Sign In
       signInWithEmailAndPassword(
         auth,
         email.current.value,
@@ -54,6 +63,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           console.log("✅ Signed in user:", userCredential.user);
+          navigate("/Browse"); // ✅ Moved inside .then
         })
         .catch((error) => {
           console.error("❌ Signin error:", error);

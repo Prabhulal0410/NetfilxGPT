@@ -1,3 +1,22 @@
+# Steps 
+
+- Created app using Vite and tailwind
+- created Header
+- Sign in Form
+- Signup Form
+- Added Validations
+- Use UserRef hook for validation
+- Setup firebase
+- Created signin Signup auth using Firebase
+- Created Redux store with userSlice 
+
+
+
+
+
+
+
+
 # Features
 
     -Login/Signup page
