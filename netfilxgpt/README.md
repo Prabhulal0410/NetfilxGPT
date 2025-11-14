@@ -9,6 +9,7 @@
 - Setup firebase
 - Created signin Signup auth using Firebase
 - Created Redux store with userSlice 
+- added signout functionality using firebase and reduxstore
 
 
 
