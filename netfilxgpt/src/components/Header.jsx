@@ -2,7 +2,7 @@ import {auth} from "../utils/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"; 
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGO } from "../utils/constants";
 
@@ -10,6 +10,8 @@ const Header = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+    // ✅ Get current user from Redux store
+  const user = useSelector((store) => store.user);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -48,7 +50,7 @@ const Header = () => {
         className="w-24 sm:w-36 lg:w-44 object-contain"
       />
 
-      <div className="flex items-center gap-4">
+      {user && <div className="flex items-center gap-4">
         {/* User Icon */}
         <img
           src="/userlogo.png"
@@ -60,7 +62,7 @@ const Header = () => {
         <button className="text-white text-sm sm:text-base bg-red-600 hover:bg-red-700 px-3 sm:px-4 py-1.5 rounded" onClick={handleSignOut}>
           Sign Out
         </button>
-      </div>
+      </div>}
     </header>
   );
 };
