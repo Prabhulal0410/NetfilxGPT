@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import {auth} from "../utils/firebase"
-import { signOut } from "firebase/auth"; 
+import { onAuthStateChanged, signOut } from "firebase/auth"; 
+import { useEffect } from "react";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
+
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
@@ -15,6 +20,21 @@ const Header = () => {
         console.log(error);
       });
   };
+
+  //whenever user signin or signout this useeffect is called
+  //onAuthStateChanged is firebase Api automatic gets user info obj when user signin or signup
+  //if user signin we will dispatch adduser reducer to store user info into our appstore
+  //if user sign out we will dispatch removeUser reducer to remove userinfo from appstore
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+      } else {
+        dispatch(removeUser());
+      }
+    });
+  }, []);
 
   return (
     <header className="absolute top-0 left-0 w-full flex items-center justify-between px-6 sm:px-12 py-4 z-10">
