@@ -9,11 +9,9 @@
 - Setup firebase
 - Created signin Signup auth using Firebase
 - Created Redux store with userSlice 
-- added signout functionality using firebase and reduxstore
-
-
-
-
+- Added signout functionality using firebase and reduxstore
+- Bugfix - if the user not login then redirect fro browse to login page and vice-versa
+- Unscubscribe to the onAuthStateChanged callback
 
 
 

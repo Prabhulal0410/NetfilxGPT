@@ -1,20 +1,18 @@
-import { useNavigate } from "react-router-dom";
 import {auth} from "../utils/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"; 
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 
   const dispatch = useDispatch()
-
   const navigate = useNavigate()
 
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -26,14 +24,18 @@ const Header = () => {
   //if user signin we will dispatch adduser reducer to store user info into our appstore
   //if user sign out we will dispatch removeUser reducer to remove userinfo from appstore
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe =  onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        navigate("/Browse")
       } else {
         dispatch(removeUser());
+        navigate("/")
       }
     });
+    // unsubscribe when component unmount
+    return () => unsubscribe()
   }, []);
 
   return (
