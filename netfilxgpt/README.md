@@ -12,6 +12,8 @@
 - Added signout functionality using firebase and reduxstore
 - Bugfix - if the user not login then redirect fro browse to login page and vice-versa
 - Unscubscribe to the onAuthStateChanged callback
+- Register on TMDB Api and register for access token
+- Get Api call for now playing movie and get data
 
 
 
