@@ -13,7 +13,7 @@ export const toastConfig = {
   position: "top-center",
   gutter: 16,
   toastOptions: {
-    duration: 2600,
+    duration: 2000,
 
     // DEFAULT TOAST STYLE
     style: {
