@@ -28,7 +28,7 @@ const Header = () => {
   //whenever user signin or signout this useeffect is called
   //onAuthStateChanged is firebase Api automatic gets user info obj when user signin or signup
   //if user signin we will dispatch adduser reducer to store user info into our appstore
-  //if user sign out we will dispatch removeUser reducer to remove userinfo from appstore
+  //if user sign out we will dispatch removeUser reducer to remove userinfo from our appstore
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -46,32 +46,57 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="absolute top-0 left-0 w-full flex items-center justify-between px-6 sm:px-12 py-4 z-10">
-      {/* Netflix Logo */}
-      <img
-        src={LOGO}
-        alt="Netflix Logo"
-        className="w-24 sm:w-36 lg:w-44 object-contain"
-      />
+    <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black/80 to-transparent">
+      <div className="flex items-center justify-between px-6 sm:px-12 py-4">
 
-      {user && (
-        <div className="flex items-center gap-4">
-          {/* User Icon */}
+        {/* Netflix Logo */}
+        <div className="flex items-center gap-10">
           <img
-            src="/userlogo.png"
-            alt="User"
-            className="w-8 sm:w-10 h-auto rounded"
+            src={LOGO}
+            alt="Netflix Logo"
+            className="w-24 sm:w-32 lg:w-40 object-contain cursor-pointer"
+            onClick={() => navigate("/Browse")}
           />
 
-          {/* Signout Button */}
-          <button
-            className="text-white text-sm sm:text-base bg-red-600 hover:bg-red-700 px-3 sm:px-4 py-1.5 rounded"
-            onClick={handleSignOut}
-          >
-            Sign Out
-          </button>
+          {/* Navigation Menu */}
+          {user && (
+            <nav className="hidden sm:flex gap-4 lg:gap-6 text-white font-medium text-sm">
+              <button className="hover:text-gray-300">Home</button>
+              <button className="hover:text-gray-300">Shows</button>
+              <button className="hover:text-gray-300">Movies</button>
+              <button className="hover:text-gray-300">New & Popular</button>
+              <button className="hover:text-gray-300">My List</button>
+              <button className="hover:text-gray-300">Browse by Languages</button>
+            </nav>
+          )}
         </div>
-      )}
+
+        {user && (
+          <div className="flex items-center gap-6 text-white">
+
+            {/* Search Icon */}
+            <span className="hidden sm:block text-xl cursor-pointer">🔍</span>
+
+            {/* Notifications Icon */}
+            <span className="hidden sm:block text-xl cursor-pointer">🔔</span>
+
+            {/* User Icon */}
+            <img
+              src="/userlogo.png"
+              alt="User"
+              className="w-8 sm:w-10 h-auto rounded cursor-pointer"
+            />
+
+            {/* Signout Button */}
+            <button
+              className="text-white text-xs sm:text-sm bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </button>
+          </div>
+        )}
+      </div>
     </header>
   );
 };
