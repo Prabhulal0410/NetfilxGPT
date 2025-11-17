@@ -1,24 +1,27 @@
-import {auth} from "../utils/firebase"
-import { onAuthStateChanged, signOut } from "firebase/auth"; 
+import { auth } from "../utils/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGO } from "../utils/constants";
+import { toast } from "react-hot-toast";   // ✅ ADDED
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-    // ✅ Get current user from Redux store
+  // ✅ Get current user from Redux store
   const user = useSelector((store) => store.user);
 
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
+        toast.success("Signed out successfully ✨");  // ✅ PREMIUM TOAST
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Failed to sign out. Try again!"); // ❌ error toast
       });
   };
 
@@ -27,47 +30,54 @@ const Header = () => {
   //if user signin we will dispatch adduser reducer to store user info into our appstore
   //if user sign out we will dispatch removeUser reducer to remove userinfo from appstore
   useEffect(() => {
-    const unsubscribe =  onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
-        navigate("/Browse")
+        navigate("/Browse");
       } else {
         dispatch(removeUser());
-        navigate("/")
+        navigate("/");
       }
     });
+
     // unsubscribe when component unmount
-    return () => unsubscribe()
+    return () => unsubscribe();
   }, []);
 
   return (
     <header className="absolute top-0 left-0 w-full flex items-center justify-between px-6 sm:px-12 py-4 z-10">
       {/* Netflix Logo */}
       <img
-        src= {LOGO}
+        src={LOGO}
         alt="Netflix Logo"
         className="w-24 sm:w-36 lg:w-44 object-contain"
       />
 
-      {user && <div className="flex items-center gap-4">
-        {/* User Icon */}
-        <img
-          src="/userlogo.png"
-          alt="User"
-          className="w-8 sm:w-10 h-auto rounded"
-        />
+      {user && (
+        <div className="flex items-center gap-4">
+          {/* User Icon */}
+          <img
+            src="/userlogo.png"
+            alt="User"
+            className="w-8 sm:w-10 h-auto rounded"
+          />
 
-        {/* Signout Button */}
-        <button className="text-white text-sm sm:text-base bg-red-600 hover:bg-red-700 px-3 sm:px-4 py-1.5 rounded" onClick={handleSignOut}>
-          Sign Out
-        </button>
-      </div>}
+          {/* Signout Button */}
+          <button
+            className="text-white text-sm sm:text-base bg-red-600 hover:bg-red-700 px-3 sm:px-4 py-1.5 rounded"
+            onClick={handleSignOut}
+          >
+            Sign Out
+          </button>
+        </div>
+      )}
     </header>
   );
 };
 
 export default Header;
+
 
 
 

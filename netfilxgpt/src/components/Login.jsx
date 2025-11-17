@@ -10,10 +10,13 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
+// Toast (Using premium config from App.js)
+import toast from "react-hot-toast";
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({});
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const name = useRef(null);
   const email = useRef(null);
@@ -33,68 +36,56 @@ const Login = () => {
       ) || {};
 
     setErrors(validationErrors);
-    console.log("Validation errors:", validationErrors);
 
     if (Object.keys(validationErrors).length > 0) return;
 
     if (!isSignInForm) {
-      // 🔹 Sign Up
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
+        .then(() => {
           updateProfile(auth.currentUser, {
             displayName: name.current?.value,
-            photoURL: "https://example.com/jane-q-user/profile.jpg",
+            photoURL: "https://example.com/user.png",
           })
             .then(() => {
               const { uid, email, displayName } = auth.currentUser;
-              dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+              dispatch(addUser({ uid, email, displayName }));
+              toast.success("Account created successfully!");
             })
-            .catch((error) => {
-              setErrors(error.message);
-            });
-          console.log("✅ Signed up user:", userCredential.user);
+            .catch(() => toast.error("Profile update failed"));
         })
         .catch((error) => {
           if (error.code === "auth/email-already-in-use") {
-            alert("This email is already registered. Please sign in instead.");
+            toast.error("Email already registered! Please sign in.");
           } else {
-            console.error("Signup error:", error.message);
+            toast.error("Signup failed. Try again.");
           }
-          setErrors({ firebase: error.message });
         });
     } else {
-      // 🔹 Sign In
       signInWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
-          console.log("✅ Signed in user:", userCredential.user);
-        })
-        .catch((error) => {
-          console.error("❌ Signin error:", error);
-          setErrors({ firebase: error.message });
-        });
+        .then(() => toast.success("Logged in successfully!"))
+        .catch(() => toast.error("Invalid email or password"));
     }
   };
 
   return (
     <div className="relative w-full h-screen text-white font-sans">
-      {/* Background */}
       <img
         src="/loginpagebg.jpg"
         alt="Login background"
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/30"></div>
+
       <Header />
 
-      {/* Auth Form */}
       <div className="absolute inset-0 flex justify-center items-center z-10 px-4 sm:px-6">
         <div className="bg-black/70 backdrop-blur-md p-8 sm:p-10 md:p-12 rounded-lg w-full max-w-sm sm:max-w-md shadow-2xl">
           <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center">
@@ -102,7 +93,6 @@ const Login = () => {
           </h1>
 
           <form className="flex flex-col gap-4 sm:gap-5">
-            {/* Name (only in SignUp) */}
             {!isSignInForm && (
               <div>
                 <input
@@ -121,7 +111,6 @@ const Login = () => {
               </div>
             )}
 
-            {/* Email */}
             <div>
               <input
                 type="email"
@@ -138,7 +127,6 @@ const Login = () => {
               )}
             </div>
 
-            {/* Password */}
             <div>
               <input
                 type="password"
@@ -151,18 +139,12 @@ const Login = () => {
                 }`}
               />
               {errors.password && (
-                <p className="text-red-400 text-sm mt-1">{errors.password}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.password}
+                </p>
               )}
             </div>
 
-            {/* 🔥 Firebase error message */}
-            {errors.firebase && (
-              <p className="text-red-500 text-sm mt-3 text-center">
-                {errors.firebase}
-              </p>
-            )}
-
-            {/* Submit Button */}
             <button
               type="submit"
               onClick={handleButtonClick}
@@ -172,7 +154,6 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Remember Me + Help (Netflix Style) */}
           <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" className="accent-red-500" />
@@ -183,7 +164,6 @@ const Login = () => {
             </a>
           </div>
 
-          {/* Toggle */}
           <div className="mt-8 text-gray-400 text-sm text-center">
             {isSignInForm ? (
               <>
@@ -208,7 +188,6 @@ const Login = () => {
             )}
           </div>
 
-          {/* ReCAPTCHA Text */}
           <p className="text-xs text-gray-500 mt-6 text-center leading-relaxed">
             This page is protected by Google reCAPTCHA to ensure you're not a
             bot.{" "}
@@ -223,3 +202,4 @@ const Login = () => {
 };
 
 export default Login;
+
