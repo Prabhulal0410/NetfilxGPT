@@ -4,14 +4,13 @@ import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
-  
   useNowPlayingMovies();
 
   return (
-    <div>
+    <div className="relative bg-black min-h-screen">
       <Header />
-      <MainContainer/>
-      <SecondaryContainer/>
+      <MainContainer />
+      <SecondaryContainer />
     </div>
   );
 };

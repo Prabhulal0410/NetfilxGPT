@@ -1,32 +1,26 @@
-import React from "react";
-
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="absolute top-[30%] md:top-[35%] left-0 px-6 md:px-12 lg:px-24 z-20 max-w-2xl">
-
-      {/* Title */}
-      <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg">
+    <div className="absolute top-[45%] left-10 md:left-20 z-20 max-w-xl">
+      <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-xl">
         {title}
       </h1>
 
-      {/* Overview */}
-      <p className="mt-4 text-sm md:text-lg lg:text-xl text-gray-200 leading-relaxed line-clamp-3 drop-shadow-xl">
+      <p className="mt-3 hidden md:block text-lg text-gray-200 drop-shadow-xl max-w-xl">
         {overview}
       </p>
 
-      {/* Buttons */}
-      <div className="mt-6 flex gap-3">
-        <button className="bg-white text-black font-semibold px-6 md:px-8 py-2 md:py-3 rounded-md flex items-center gap-2 hover:bg-gray-300 transition">
-          <span className="text-xl">▶</span> Play
+      <div className="mt-4 flex gap-4">
+        <button className="bg-white text-black font-semibold px-6 md:px-8 py-2 rounded-md flex items-center gap-2">
+          ▶ Play
         </button>
 
-        <button className="bg-gray-600/70 text-white font-semibold px-6 md:px-8 py-2 md:py-3 rounded-md flex items-center gap-2 hover:bg-gray-500 transition">
-          <span className="text-xl">ℹ</span> More Info
+        <button className="bg-gray-500/70 text-white font-semibold px-6 md:px-8 py-2 rounded-md flex items-center gap-2">
+          + My List
         </button>
       </div>
-
     </div>
   );
 };
 
 export default VideoTitle;
+

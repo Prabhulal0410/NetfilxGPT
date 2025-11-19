@@ -46,7 +46,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50  from-black/80 to-transparent">
+    <header className="fixed top-0 left-0 w-full z-50  from-black/80 to-transparent px-6">
       <div className="flex items-center justify-between px-6 sm:px-12 py-4">
 
         {/* Netflix Logo */}
