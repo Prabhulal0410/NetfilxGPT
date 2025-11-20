@@ -27,7 +27,7 @@ const MainContainer = () => {
           />
 
           {/* Bottom Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent"></div>
 
           {/* Bottom Content */}
           <div className="absolute bottom-6 left-4 right-4 text-white">
