@@ -29,7 +29,7 @@ const VideoBackground = ({ movieId }) => {
       ></iframe>
 
       {/* Fade Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
     </div>
   );
 };
