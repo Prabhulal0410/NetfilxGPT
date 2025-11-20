@@ -1,4 +1,3 @@
-// MovieCard.jsx
 import React from "react";
 import { IMG_CDN } from "../utils/constants";
 
@@ -21,3 +20,4 @@ const MovieCard = ({ imagePoster }) => {
 };
 
 export default MovieCard;
+

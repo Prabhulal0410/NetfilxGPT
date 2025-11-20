@@ -11,14 +11,15 @@ const MainContainer = () => {
     "https://image.tmdb.org/t/p/original" + mainMovie.backdrop_path;
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full z-0 
+                    h-[80vh] md:h-[90vh] overflow-hidden">  
       {/* ⭐ DESKTOP: autoplay trailer */}
-      <div className="hidden md:block">
+      <div className="hidden md:block absolute inset-0">
         <VideoBackground movieId={mainMovie.id} />
       </div>
 
       {/* ⭐ MOBILE: full-screen hero poster */}
-      <div className="block md:hidden">
+      <div className="block md:hidden absolute inset-0">
         <div className="relative w-screen h-[80vh] overflow-hidden">
           <img
             src={imageUrl}
