@@ -11,10 +11,7 @@ const MainContainer = () => {
     "https://image.tmdb.org/t/p/original" + mainMovie.backdrop_path;
 
   return (
-    <div
-      className="relative w-full z-0 
-                 h-[80vh] md:h-[90vh] overflow-hidden"
-    >
+    <div className="relative w-full z-0 h-[80vh] md:h-[90vh] overflow-hidden">
       {/* ⭐ DESKTOP: autoplay trailer */}
       <div className="hidden md:block absolute inset-0">
         <VideoBackground movieId={mainMovie.id} />
@@ -25,7 +22,7 @@ const MainContainer = () => {
 
       {/* ⭐ MOBILE: full-screen hero poster */}
       <div className="block md:hidden absolute inset-0 z-10">
-        <div className="relative w-screen h-[80vh] ">
+        <div className="relative w-screen h-[80vh] pt-10">
           <img
             src={imageUrl}
             className="w-full h-full object-cover"
@@ -42,11 +39,19 @@ const MainContainer = () => {
             </p>
 
             <div className="flex gap-3">
-              <button className="flex-1 bg-white text-black py-2 rounded-md font-semibold flex items-center justify-center gap-2">
+              {/* Play Button */}
+              <button
+                className="flex-1 bg-white text-black py-2 rounded-md font-semibold flex items-center justify-center gap-2 
+    cursor-pointer transition-all duration-200 hover:bg-gray-200"
+              >
                 ▶ Play
               </button>
 
-              <button className="flex-1 bg-white/20 text-white py-2 rounded-md border border-white/40 font-semibold flex items-center justify-center gap-2">
+              {/* My List Button */}
+              <button
+                className="flex-1 bg-white/20 text-white py-2 rounded-md border border-white/40 font-semibold flex items-center justify-center gap-2 
+    cursor-pointer transition-all duration-200 hover:bg-white/30"
+              >
                 + My List
               </button>
             </div>

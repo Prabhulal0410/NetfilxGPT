@@ -10,11 +10,19 @@ const VideoTitle = ({ title, overview }) => {
       </p>
 
       <div className="mt-4 flex gap-4">
-        <button className="bg-white text-black font-semibold px-6 md:px-8 py-2 rounded-md flex items-center gap-2">
+        {/* Play Button */}
+        <button
+          className="bg-white text-black font-semibold px-6 md:px-8 py-2 rounded-md flex items-center gap-2
+          cursor-pointer transition-all duration-200 hover:bg-gray-300"
+        >
           ▶ Play
         </button>
 
-        <button className="bg-gray-500/70 text-white font-semibold px-6 md:px-8 py-2 rounded-md flex items-center gap-2">
+        {/* My List */}
+        <button
+          className="bg-gray-500/70 text-white font-semibold px-6 md:px-8 py-2 rounded-md flex items-center gap-2
+          cursor-pointer transition-all duration-200 hover:bg-gray-400/70"
+        >
           + My List
         </button>
       </div>
@@ -23,4 +31,3 @@ const VideoTitle = ({ title, overview }) => {
 };
 
 export default VideoTitle;
-
