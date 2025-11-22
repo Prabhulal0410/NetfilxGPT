@@ -45,6 +45,10 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptSearch = () => {
+    
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 
@@ -73,9 +77,6 @@ const Header = () => {
               <button className="hover:text-gray-300">Movies</button>
               <button className="hover:text-gray-300">New & Popular</button>
               <button className="hover:text-gray-300">My List</button>
-              <button className="hover:text-gray-300">
-                Browse by Languages
-              </button>
             </nav>
           )}
         </div>
@@ -83,8 +84,7 @@ const Header = () => {
         {/* Right Side */}
         {user && (
           <div className="flex items-center gap-6 text-white">
-            <span className="hidden sm:block text-xl cursor-pointer">🔍</span>
-            <span className="hidden sm:block text-xl cursor-pointer">🔔</span>
+            <button className="bg-gray-300 px-4 py-1 rounded-md cursor-pointer text-black" onClick={handleGptSearch}>GptSearch</button>
 
             <img
               src="/userlogo.png"
