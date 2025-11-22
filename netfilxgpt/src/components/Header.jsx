@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGO } from "../utils/constants";
 import { toast } from "react-hot-toast";
+import { toggleGptSearchView } from "../utils/searchSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,8 @@ const Header = () => {
   }, []);
 
   const handleGptSearch = () => {
-    
+    //toggle gptsearch on click
+    dispatch(toggleGptSearchView())
   }
 
   return (
