@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toast } from "react-hot-toast";
 import { toggleGptSearchView } from "../utils/searchSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,10 @@ const Header = () => {
     dispatch(toggleGptSearchView())
   }
 
+  const handleLangChange = (e) => {
+    dispatch(changeLanguage(e.target.value))
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 
@@ -87,8 +92,8 @@ const Header = () => {
         {user && (
           <div className="flex items-center gap-6 text-white">
 
-          <select className="bg-black">
-            {SUPPORTED_LANGUAGES.map((lang)=><option key={lang.identifier} value="lang.identifier">{lang.name}</option>)}
+          <select className="bg-black" onChange={handleLangChange}>
+            {SUPPORTED_LANGUAGES.map((lang)=><option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
           </select>
 
             <button className="bg-gray-300 px-4 py-1 rounded-md cursor-pointer text-black" onClick={handleGptSearch}>GptSearch</button>
