@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toast } from "react-hot-toast";
 import { toggleGptSearchView } from "../utils/searchSlice";
 
@@ -86,6 +86,11 @@ const Header = () => {
         {/* Right Side */}
         {user && (
           <div className="flex items-center gap-6 text-white">
+
+          <select className="bg-black">
+            {SUPPORTED_LANGUAGES.map((lang)=><option key={lang.identifier} value="lang.identifier">{lang.name}</option>)}
+          </select>
+
             <button className="bg-gray-300 px-4 py-1 rounded-md cursor-pointer text-black" onClick={handleGptSearch}>GptSearch</button>
 
             <img
