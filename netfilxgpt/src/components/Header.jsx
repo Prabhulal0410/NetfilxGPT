@@ -13,6 +13,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   // Track scrolling
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,12 +50,12 @@ const Header = () => {
 
   const handleGptSearch = () => {
     //toggle gptsearch on click
-    dispatch(toggleGptSearchView())
-  }
+    dispatch(toggleGptSearchView());
+  };
 
   const handleLangChange = (e) => {
-    dispatch(changeLanguage(e.target.value))
-  }
+    dispatch(changeLanguage(e.target.value));
+  };
 
   return (
     <header
@@ -66,7 +67,7 @@ const Header = () => {
       }
       `}
     >
-      <div className="flex items-center justify-between px-6 sm:px-12 py-2">
+      <div className="flex items-center justify-between px-6 sm:px-16 py-2">
         {/* Logo + Nav */}
         <div className="flex items-center gap-10">
           <img
@@ -91,21 +92,50 @@ const Header = () => {
         {/* Right Side */}
         {user && (
           <div className="flex items-center gap-6 text-white">
+            {showGptSearch && (
+              <select
+                className="bg-black/70 text-white border border-white/20 px-3 py-1.5 rounded-md backdrop-blur-sm hover:border-white/40 transition"
+                onChange={handleLangChange}
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option
+                    key={lang.identifier}
+                    value={lang.identifier}
+                    className="bg-black text-white"
+                  >
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            )}
 
-          <select className="bg-black" onChange={handleLangChange}>
-            {SUPPORTED_LANGUAGES.map((lang)=><option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
-          </select>
+            {/* ⭐ Modern Netflix-style GPT Button */}
+            <button
+              className="px-4 py-1.5 rounded-md font-medium
+                 bg-white/10 text-white border border-white/20
+                 hover:bg-white/20 hover:border-white/40
+                 backdrop-blur-md transition-all duration-200 cursor-pointer"
+              onClick={handleGptSearch}
+            >
+              {showGptSearch ? "Home Page" : "GPT Search"}
+            </button>
 
-            <button className="bg-gray-300 px-4 py-1 rounded-md cursor-pointer text-black" onClick={handleGptSearch}>GptSearch</button>
-
+            {/* ⭐ Netflix-style Avatar */}
             <img
               src="/userlogo.png"
               alt="User"
-              className="w-7 sm:w-9 rounded cursor-pointer"
+              className="w-8 h-8 rounded-md object-cover
+                border border-white/20 hover:border-white/40
+                transition cursor-pointer"
             />
 
+            {/* ⭐ Red-ish Gradient Netflix Signout Button */}
             <button
-              className="bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded text-xs sm:text-sm"
+              className="px-3 py-1.5 rounded-md text-sm font-semibold
+                 bg-gradient-to-r from-red-600 via-red-700 to-red-800
+                 hover:from-red-700 hover:via-red-800 hover:to-red-900
+                 shadow-md shadow-red-900/30
+                 transition-all duration-200 cursor-pointer"
               onClick={handleSignOut}
             >
               Sign Out

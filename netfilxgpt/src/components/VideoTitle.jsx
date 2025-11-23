@@ -1,11 +1,11 @@
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="absolute top-[45%] left-10 md:left-20 z-20 max-w-xl">
-      <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-xl">
+    <div className="absolute top-[42%] left-10 md:left-20 z-20 max-w-xl">
+      <h1 className="text-2xl md:text-6xl font-extrabold text-white drop-shadow-xl">
         {title}
       </h1>
 
-      <p className="mt-3 hidden md:block text-lg text-gray-200 drop-shadow-xl max-w-xl">
+      <p className="mt-3 hidden md:block text-[16px] text-gray-200 drop-shadow-xl max-w-xl">
         {overview}
       </p>
 
