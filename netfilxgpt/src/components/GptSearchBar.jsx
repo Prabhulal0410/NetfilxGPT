@@ -82,9 +82,6 @@ const GptSearchBar = () => {
       {/* Result Display */}
       {result && (
         <div className="relative z-10 mt-6 bg-black/60 text-white p-4 rounded-md backdrop-blur-sm max-w-xl">
-          <h2 className="font-bold mb-2">Recommended Movies (Text):</h2>
-          <p>{result}</p>
-
           <h3 className="font-bold mt-4">Recommended Movies (Array):</h3>
           <pre>{JSON.stringify(movies, null, 2)}</pre>
         </div>
