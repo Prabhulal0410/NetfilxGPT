@@ -8,6 +8,7 @@ const GptSearchBar = () => {
 
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
+  const [movies, setMovies] = useState([]); // 👉 ARRAY STATE
 
   // Handle search
   const handleSearch = async (e) => {
@@ -19,14 +20,26 @@ const GptSearchBar = () => {
       Act as a movie recommendation system.
       Suggest some movies for the query: "${input}"
       Only give exactly 5 movies.
-      Only comma-separated values. 
+      Only comma-separated values.
       Example format: hello,ninja,harry potter,black,dark
     `;
 
     try {
       const res = await model.generateContent(query);
-      const text = res.response.text();
+      const text = res.response.text().trim();
+
       setResult(text);
+
+      // 👉 Convert text to array & clean whitespace
+      const movieArray = text
+        .split(",")
+        .map((m) => m.trim())
+        .filter((m) => m.length > 0);
+
+      setMovies(movieArray);
+
+      console.log("Movie Array:", movieArray);
+
     } catch (err) {
       console.error("Gemini API Error:", err);
       setResult("Something went wrong.");
@@ -43,13 +56,12 @@ const GptSearchBar = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Black Gradient Overlay */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/80"></div>
 
       {/* Search Bar */}
       <div className="relative z-10 w-full px-4 flex justify-center">
         <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
-
           <input
             type="text"
             placeholder={lang[langKey].gptSearchPlaceholder}
@@ -70,8 +82,11 @@ const GptSearchBar = () => {
       {/* Result Display */}
       {result && (
         <div className="relative z-10 mt-6 bg-black/60 text-white p-4 rounded-md backdrop-blur-sm max-w-xl">
-          <h2 className="font-bold mb-2">Recommended Movies:</h2>
+          <h2 className="font-bold mb-2">Recommended Movies (Text):</h2>
           <p>{result}</p>
+
+          <h3 className="font-bold mt-4">Recommended Movies (Array):</h3>
+          <pre>{JSON.stringify(movies, null, 2)}</pre>
         </div>
       )}
     </div>
