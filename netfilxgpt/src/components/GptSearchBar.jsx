@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import lang from "../utils/languageConstant";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { model } from "../utils/gemini"; // IMPORT MODEL
 import { API_OPTIONS } from "../utils/constants";
+import { addGptMovieresult } from "../utils/searchSlice";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
 
+  const dispatch = useDispatch();
+
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
 
-  const searchMovieTmdb = async(movie) => {
-    const data = await fetch("https://api.themoviedb.org/3/search/movie?query=" + movie+ "&include_adult=false&language=en-US&page=1", API_OPTIONS)
-    const json = await data.json()
-    return json.results
-  }
+  const searchMovieTmdb = async (movie) => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie +
+        "&include_adult=false&language=en-US&page=1",
+      API_OPTIONS
+    );
+    const json = await data.json();
+    return json.results;
+  };
 
   // Handle search
   const handleSearch = async (e) => {
@@ -32,24 +40,26 @@ const GptSearchBar = () => {
 
     try {
       const res = await model.generateContent(query);
-      const text = res.response.text().trim();
+      const movienames = res.response.text().trim();
 
-      setResult(text);
+      setResult(movienames);
 
       // 👉 Convert text to array & clean whitespace
-      const movieArray = text
+      const movieArray = movienames
         .split(",")
         .map((m) => m.trim())
         .filter((m) => m.length > 0);
 
-      const promiseArray = movieArray.map((movie)=>searchMovieTmdb(movie)) 
+      const promiseArray = movieArray.map((movie) => searchMovieTmdb(movie));
       //promiseArray is return like this[promise,promise,promise,promise,promise]
 
-      const tmdbresult = await Promise.all(promiseArray)
-      console.log(tmdbresult)
+      const tmdbresult = await Promise.all(promiseArray);
+      console.log(tmdbresult);
+      dispatch(
+        addGptMovieresult({ movieName: movienames, movieResults: tmdbresult })
+      );
 
       // console.log("Movie Array:", movieArray);
-
     } catch (err) {
       console.error("Gemini API Error:", err);
       setResult("Something went wrong.");
@@ -58,7 +68,6 @@ const GptSearchBar = () => {
 
   return (
     <div className="relative w-full min-h-screen flex flex-col items-center justify-center">
-
       {/* Background Image */}
       <img
         src="/loginpagebg.jpg"
@@ -71,7 +80,6 @@ const GptSearchBar = () => {
 
       {/* Search Bar */}
       <div className="relative w-full min-h-screen flex flex-col items-center justify-start pt-52">
-
         <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
           <input
             type="text"
