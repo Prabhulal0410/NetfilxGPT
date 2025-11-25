@@ -57,10 +57,11 @@ const GptSearchBar = () => {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/80"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/5"></div>
 
       {/* Search Bar */}
-      <div className="relative z-10 w-full px-4 flex justify-center">
+      <div className="relative w-full min-h-screen flex flex-col items-center justify-start pt-52">
+
         <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
           <input
             type="text"
