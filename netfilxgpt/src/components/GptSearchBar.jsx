@@ -9,7 +9,6 @@ const GptSearchBar = () => {
 
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
-  const [movies, setMovies] = useState([]); // 👉 ARRAY STATE
 
   const searchMovieTmdb = async(movie) => {
     const data = await fetch("https://api.themoviedb.org/3/search/movie?query=" + movie+ "&include_adult=false&language=en-US&page=1", API_OPTIONS)
@@ -43,9 +42,13 @@ const GptSearchBar = () => {
         .map((m) => m.trim())
         .filter((m) => m.length > 0);
 
-      setMovies(movieArray);
+      const promiseArray = movieArray.map((movie)=>searchMovieTmdb(movie)) 
+      //promiseArray is return like this[promise,promise,promise,promise,promise]
 
-      console.log("Movie Array:", movieArray);
+      const tmdbresult = await Promise.all(promiseArray)
+      console.log(tmdbresult)
+
+      // console.log("Movie Array:", movieArray);
 
     } catch (err) {
       console.error("Gemini API Error:", err);
@@ -86,14 +89,6 @@ const GptSearchBar = () => {
           </button>
         </form>
       </div>
-
-      {/* Result Display */}
-      {result && (
-        <div className="relative z-10 mt-6 bg-black/60 text-white p-4 rounded-md backdrop-blur-sm max-w-xl">
-          <h3 className="font-bold mt-4">Recommended Movies (Array):</h3>
-          <pre>{JSON.stringify(movies, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 };
