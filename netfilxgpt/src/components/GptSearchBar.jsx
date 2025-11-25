@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import lang from "../utils/languageConstant";
 import { useSelector } from "react-redux";
 import { model } from "../utils/gemini"; // IMPORT MODEL
+import { API_OPTIONS } from "../utils/constants";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
@@ -9,6 +10,12 @@ const GptSearchBar = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [movies, setMovies] = useState([]); // 👉 ARRAY STATE
+
+  const searchMovieTmdb = async(movie) => {
+    const data = await fetch("https://api.themoviedb.org/3/search/movie?query=" + movie+ "&include_adult=false&language=en-US&page=1", API_OPTIONS)
+    const json = await data.json()
+    return json.results
+  }
 
   // Handle search
   const handleSearch = async (e) => {
