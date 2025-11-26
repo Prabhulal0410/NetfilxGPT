@@ -65,7 +65,7 @@ const GptSearchBar = () => {
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/5"></div>
 
       {/* Content Layer */}
       <div className="relative z-20 w-full flex flex-col items-center mt-40">
