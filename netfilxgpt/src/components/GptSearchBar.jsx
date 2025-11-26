@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import lang from "../utils/languageConstant";
 import { useDispatch, useSelector } from "react-redux";
-import { model } from "../utils/gemini"; // IMPORT MODEL
+import { model } from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieresult } from "../utils/searchSlice";
+import GptMovieSuggestion from "./GptMovieSuggestion";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
-
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
-  const [result, setResult] = useState("");
 
   const searchMovieTmdb = async (movie) => {
     const data = await fetch(
@@ -24,10 +23,8 @@ const GptSearchBar = () => {
     return json.results;
   };
 
-  // Handle search
   const handleSearch = async (e) => {
     e.preventDefault();
-
     if (!input) return;
 
     const query = `
@@ -42,32 +39,24 @@ const GptSearchBar = () => {
       const res = await model.generateContent(query);
       const movienames = res.response.text().trim();
 
-      setResult(movienames);
-
-      // 👉 Convert text to array & clean whitespace
       const movieArray = movienames
         .split(",")
         .map((m) => m.trim())
         .filter((m) => m.length > 0);
 
       const promiseArray = movieArray.map((movie) => searchMovieTmdb(movie));
-      //promiseArray is return like this[promise,promise,promise,promise,promise]
-
       const tmdbresult = await Promise.all(promiseArray);
-      console.log(tmdbresult);
-      dispatch(
-        addGptMovieresult({ movieName: movienames, movieResults: tmdbresult })
-      );
 
-      // console.log("Movie Array:", movieArray);
+      dispatch(
+        addGptMovieresult({ movieNames: movieArray, movieResult: tmdbresult })
+      );
     } catch (err) {
       console.error("Gemini API Error:", err);
-      setResult("Something went wrong.");
     }
   };
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-center">
+    <div className="relative w-full min-h-screen flex flex-col items-center">
       {/* Background Image */}
       <img
         src="/loginpagebg.jpg"
@@ -75,16 +64,17 @@ const GptSearchBar = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/5"></div>
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70"></div>
 
-      {/* Search Bar */}
-      <div className="relative w-full min-h-screen flex flex-col items-center justify-start pt-52">
+      {/* Content Layer */}
+      <div className="relative z-20 w-full flex flex-col items-center mt-40">
+        {/* 🔍 Search Bar */}
         <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder={lang[langKey].gptSearchPlaceholder}
-            className="flex-grow bg-black/60 text-white placeholder-gray-400 px-4 py-3 rounded-l-md focus:outline-none border border-gray-700 focus:border-white backdrop-blur-sm"
+            className="flex-grow bg-black/60 text-white px-4 py-3 rounded-l-md border border-gray-600 focus:outline-none focus:border-white"
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
@@ -96,6 +86,11 @@ const GptSearchBar = () => {
             {lang[langKey].search}
           </button>
         </form>
+
+        {/* 🎬 GPT Movie Suggestions */}
+        <div className="w-full px-6 mt-10">
+          <GptMovieSuggestion />
+        </div>
       </div>
     </div>
   );
