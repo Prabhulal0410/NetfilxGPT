@@ -10,12 +10,12 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
-// Toast (Using premium config from App.js)
 import toast from "react-hot-toast";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // inline loader
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -39,6 +39,9 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length > 0) return;
 
+    setLoading(true); // start inline loader
+
+    // SIGN UP
     if (!isSignInForm) {
       createUserWithEmailAndPassword(
         auth,
@@ -53,26 +56,41 @@ const Login = () => {
             .then(() => {
               const { uid, email, displayName } = auth.currentUser;
               dispatch(addUser({ uid, email, displayName }));
+
               toast.success("Account created successfully!");
+              setLoading(false);
             })
-            .catch(() => toast.error("Profile update failed"));
+            .catch(() => {
+              toast.error("Profile update failed!");
+              setLoading(false);
+            });
         })
         .catch((error) => {
+          setLoading(false);
           if (error.code === "auth/email-already-in-use") {
             toast.error("Email already registered! Please sign in.");
           } else {
             toast.error("Signup failed. Try again.");
           }
         });
-    } else {
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then(() => toast.success("Logged in successfully!"))
-        .catch(() => toast.error("Invalid email or password"));
+
+      return;
     }
+
+    // SIGN IN
+    signInWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then(() => {
+        toast.success("Logged in successfully!");
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Invalid email or password");
+        setLoading(false);
+      });
   };
 
   return (
@@ -82,7 +100,7 @@ const Login = () => {
         alt="Login background"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/30"></div>
+      <div className="absolute inset-0 bg-black/20"></div>
 
       <Header />
 
@@ -99,7 +117,7 @@ const Login = () => {
                   type="text"
                   ref={name}
                   placeholder="Full Name"
-                  className={`w-full px-4 py-3 sm:py-3.5 bg-transparent border rounded-md text-white placeholder-gray-400 text-base focus:outline-none transition-all duration-200 ${
+                  className={`w-full px-4 py-3 bg-transparent border rounded-md text-white placeholder-gray-400 text-base ${
                     errors.name
                       ? "border-red-500"
                       : "border-gray-600 focus:border-white"
@@ -116,7 +134,7 @@ const Login = () => {
                 type="email"
                 ref={email}
                 placeholder="Email address"
-                className={`w-full px-4 py-3 sm:py-3.5 bg-transparent border rounded-md text-white placeholder-gray-400 text-base focus:outline-none transition-all duration-200 ${
+                className={`w-full px-4 py-3 bg-transparent border rounded-md text-white placeholder-gray-400 text-base ${
                   errors.email
                     ? "border-red-500"
                     : "border-gray-600 focus:border-white"
@@ -132,25 +150,34 @@ const Login = () => {
                 type="password"
                 ref={password}
                 placeholder="Password"
-                className={`w-full px-4 py-3 sm:py-3.5 bg-transparent border rounded-md text-white placeholder-gray-400 text-base focus:outline-none transition-all duration-200 ${
+                className={`w-full px-4 py-3 bg-transparent border rounded-md text-white placeholder-gray-400 text-base ${
                   errors.password
                     ? "border-red-500"
                     : "border-gray-600 focus:border-white"
                 }`}
               />
               {errors.password && (
-                <p className="text-red-400 text-sm mt-1">
-                  {errors.password}
-                </p>
+                <p className="text-red-400 text-sm mt-1">{errors.password}</p>
               )}
             </div>
 
             <button
               type="submit"
+              disabled={loading}
               onClick={handleButtonClick}
-              className="w-full bg-red-600 hover:bg-red-700 rounded-md py-3 sm:py-1.5 font-semibold mt-2 transition-all duration-300 text-base sm:text-lg shadow-lg"
+              className={`w-full rounded-md py-3 font-semibold mt-2 transition-all duration-300 text-lg shadow-lg ${
+                loading
+                  ? "bg-red-800 cursor-not-allowed"
+                  : "bg-red-600 hover:bg-red-700"
+              }`}
             >
-              {isSignInForm ? "Sign In" : "Sign Up"}
+              {loading
+                ? isSignInForm
+                  ? "Signing in..."
+                  : "Creating account..."
+                : isSignInForm
+                ? "Sign In"
+                : "Sign Up"}
             </button>
           </form>
 
@@ -188,12 +215,8 @@ const Login = () => {
             )}
           </div>
 
-          <p className="text-xs text-gray-500 mt-6 text-center leading-relaxed">
-            This page is protected by Google reCAPTCHA to ensure you're not a
-            bot.{" "}
-            <span className="text-blue-400 hover:underline cursor-pointer">
-              Learn more.
-            </span>
+          <p className="text-xs text-gray-500 mt-6 text-center">
+            This page is protected by Google reCAPTCHA to ensure you're not a bot.
           </p>
         </div>
       </div>
