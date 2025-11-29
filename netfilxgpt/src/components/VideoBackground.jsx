@@ -15,36 +15,45 @@ const VideoBackground = ({ movieId }) => {
 
   return (
     <div className="
-        relative w-full 
-        h-[60vh]        /* reduced mobile height */
-        md:h-[90vh]    /* desktop height */
-        overflow-hidden bg-black
-      "
-    >
-      {/* ⭐ Mobile: 9:16 video */}
-      <div className="md:hidden w-full aspect-[9/16] mx-auto overflow-hidden">
-        <iframe
-          src={videoUrl}
-          allow="autoplay; encrypted-media"
-          className="w-full h-full object-cover pointer-events-none"
-        ></iframe>
-      </div>
+      relative w-full 
+      h-[100vh]        /* FULL mobile height like Netflix */
+      md:h-[80vh]      /* desktop height unchanged */
+      overflow-hidden bg-black
+    ">
+      
+      {/* ⭐ MOBILE: Perfect 9:16 fullscreen video */}
+      {/* ⭐ MOBILE: Proper vertical cropped video like Netflix */}
+<div className="md:hidden absolute inset-0 overflow-hidden">
+  <iframe
+    src={videoUrl}
+    allow="autoplay; encrypted-media"
+    className="
+      absolute top-1/2 left-1/2
+      w-[180vw] h-[60vh]      /* oversized horizontally for cropping */
+      -translate-x-1/2 -translate-y-1/2
+      object-cover
+      scale-[1.8]             /* zoom in like Netflix */
+      pointer-events-none
+    "
+  ></iframe>
+</div>
 
-      {/* ⭐ Desktop: Fullscreen Background */}
-      <div className="hidden md:block">
+
+      {/* ⭐ DESKTOP: Fullscreen trailer */}
+      <div className="hidden md:block absolute inset-0">
         <iframe
           src={videoUrl}
           allow="autoplay; encrypted-media"
           className="
             absolute top-1/2 left-1/2 
-            w-[150vw] h-[150vh] 
+            w-[150vw] h-[150vh]
             -translate-x-1/2 -translate-y-1/2 
             object-cover pointer-events-none
           "
         ></iframe>
       </div>
 
-      {/* Gradient */}
+      {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
     </div>
   );
