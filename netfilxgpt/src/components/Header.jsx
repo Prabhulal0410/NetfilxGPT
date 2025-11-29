@@ -61,7 +61,7 @@ const Header = () => {
           <img
             src={LOGO}
             alt="Netflix Logo"
-            className="w-24 sm:w-32 lg:w-52 object-contain cursor-pointer"
+            className="w-24 sm:w-32 lg:w-44 object-contain cursor-pointer"
             onClick={() => navigate("/Browse")}
           />
 

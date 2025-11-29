@@ -13,14 +13,14 @@ const VideoTitle = ({ title, overview }) => {
       <div className="mt-4 flex gap-4">
         <button
           className="bg-white text-black font-semibold px-4 md:px-8 py-2 rounded-md 
-          hover:bg-gray-300 transition"
+          hover:bg-gray-300 transition cursor-pointer"
         >
           ▶ Play
         </button>
 
         <button
           className="bg-gray-500/70 text-white font-semibold px-4 md:px-8 py-2 rounded-md 
-          hover:bg-gray-400/70 transition"
+          hover:bg-gray-400/70 transition cursor-pointer"
         >
           + My List
         </button>
