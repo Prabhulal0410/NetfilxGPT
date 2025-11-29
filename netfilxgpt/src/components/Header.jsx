@@ -51,10 +51,10 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 
-        ${isScrolled ? "bg-black" : "bg-gradient-to-b from-black/80 to-transparent"}
+        ${isScrolled ? "bg-black" : "bg-linear-to-b from-black/80 to-transparent"}
       `}
     >
-      <div className="flex items-center justify-between px-4 sm:px-16 py-4 sm:py-2">
+      <div className="flex items-center justify-between px-4 sm:px-16 py-2 sm:py-2">
         {/* Logo + Nav */}
         <div className="flex items-center gap-6 sm:gap-10">
           <img
@@ -133,7 +133,7 @@ const Header = () => {
             {/* Desktop Sign Out */}
             <button
               className="hidden sm:block px-3 py-1.5 rounded-md text-sm font-semibold
-                bg-gradient-to-r from-red-600 via-red-700 to-red-800
+                bg-linear-to-r from-red-600 via-red-700 to-red-800
                 hover:from-red-700 hover:via-red-800 hover:to-red-900
                 shadow-md shadow-red-900/30
                 transition-all duration-200 cursor-pointer"

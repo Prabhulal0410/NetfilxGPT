@@ -14,22 +14,38 @@ const VideoBackground = ({ movieId }) => {
     trailer.key;
 
   return (
-    <div className="relative w-screen h-[95vh] overflow-hidden bg-black">
+    <div className="
+        relative w-full 
+        h-[60vh]        /* reduced mobile height */
+        md:h-[90vh]    /* desktop height */
+        overflow-hidden bg-black
+      "
+    >
+      {/* ⭐ Mobile: 9:16 video */}
+      <div className="md:hidden w-full aspect-[9/16] mx-auto overflow-hidden">
+        <iframe
+          src={videoUrl}
+          allow="autoplay; encrypted-media"
+          className="w-full h-full object-cover pointer-events-none"
+        ></iframe>
+      </div>
 
-      {/* OVERSIZED IFRAME TRICK LIKE NETFLIX */}
-      <iframe
-        src={videoUrl}
-        allow="autoplay; encrypted-media"
-        className="
-          absolute top-1/2 left-1/2 
-          w-[200vw] h-[200vh]
-          -translate-x-1/2 -translate-y-1/2
-          pointer-events-none
-        "
-      ></iframe>
+      {/* ⭐ Desktop: Fullscreen Background */}
+      <div className="hidden md:block">
+        <iframe
+          src={videoUrl}
+          allow="autoplay; encrypted-media"
+          className="
+            absolute top-1/2 left-1/2 
+            w-[150vw] h-[150vh] 
+            -translate-x-1/2 -translate-y-1/2 
+            object-cover pointer-events-none
+          "
+        ></iframe>
+      </div>
 
-      {/* Fade Overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
+      {/* Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
     </div>
   );
 };
