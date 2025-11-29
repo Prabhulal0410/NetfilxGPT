@@ -10,21 +10,17 @@ const MainContainer = () => {
 
   return (
     <div className="relative w-full z-0 mt-[-10px] md:mt-0 overflow-hidden">
-
       <VideoBackground movieId={mainMovie.id} />
 
       <div
         className="
     absolute 
-    bottom-92 left-4
+    bottom-100 left-4
     md:bottom-64 md:left-20
     z-20 max-w-xl
   "
       >
-        <VideoTitle 
-          title={mainMovie.title} 
-          overview={mainMovie.overview} 
-        />
+        <VideoTitle title={mainMovie.title} overview={mainMovie.overview} />
       </div>
 
       {/* FIXED SPACER */}

@@ -19,7 +19,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false); // Mobile dropdown
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleScroll = () => setIsScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -50,10 +50,11 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 
-        ${isScrolled ? "bg-black" : "bg-linear-to-b from-black/80 to-transparent"}
-      `}
-    >
+  className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300
+    ${isScrolled ? "bg-black" : "bg-transparent"}
+  `}
+>
+
       <div className="flex items-center justify-between px-4 sm:px-16 py-2 sm:py-2">
         {/* Logo + Nav */}
         <div className="flex items-center gap-6 sm:gap-10">
@@ -120,10 +121,10 @@ const Header = () => {
 
             {/* Mobile Dropdown */}
             {showMenu && (
-              <div className="absolute right-0 top-16 w-32 bg-black/95 border border-white/20 rounded-md shadow-lg py-2 sm:hidden animate-fadeIn z-50">
+              <div className="absolute right-0 top-10 w-24 bg-black/95 border border-white/20 rounded-md shadow-lg py-2 sm:hidden animate-fadeIn z-50">
                 <button
                   onClick={handleSignOut}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-600/20 transition"
+                  className="w-full text-center px-1 py-1 text-sm text-red-500 font-bold hover:bg-red-600/20 transition"
                 >
                   Sign Out
                 </button>

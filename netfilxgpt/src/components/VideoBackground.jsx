@@ -14,30 +14,27 @@ const VideoBackground = ({ movieId }) => {
     trailer.key;
 
   return (
-    <div className="
+    <div
+      className="
       relative w-full 
       h-[100vh]        /* FULL mobile height like Netflix */
-      md:h-[80vh]      /* desktop height unchanged */
+      md:h-[90vh]      /* desktop height unchanged */
       overflow-hidden bg-black
-    ">
-      
-      {/* ⭐ MOBILE: Perfect 9:16 fullscreen video */}
-      {/* ⭐ MOBILE: Proper vertical cropped video like Netflix */}
-<div className="md:hidden absolute inset-0 overflow-hidden">
-  <iframe
-    src={videoUrl}
-    allow="autoplay; encrypted-media"
-    className="
-      absolute top-1/2 left-1/2
-      w-[180vw] h-[60vh]      /* oversized horizontally for cropping */
-      -translate-x-1/2 -translate-y-1/2
-      object-cover
-      scale-[1.8]             /* zoom in like Netflix */
-      pointer-events-none
     "
-  ></iframe>
-</div>
-
+    >
+      {/* ⭐ MOBILE: Proper vertical cropped video like Netflix */}
+      <div className="md:hidden absolute inset-0 overflow-hidden">
+        <iframe
+          src={videoUrl}
+          allow="autoplay; encrypted-media"
+          className="absolute top-1/2 left-1/2
+                      w-[180vw] h-[60vh]      /* oversized horizontally for cropping */
+                      -translate-x-1/2 -translate-y-1/2
+                      object-cover scale-[1.8]             /* zoom in like Netflix */
+                      pointer-events-none
+                      "
+        ></iframe>
+      </div>
 
       {/* ⭐ DESKTOP: Fullscreen trailer */}
       <div className="hidden md:block absolute inset-0">
