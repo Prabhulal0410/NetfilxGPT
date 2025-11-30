@@ -13,7 +13,7 @@ const MainContainer = () => {
       <VideoBackground movieId={mainMovie.id} />
 
       <div
-        className="absolute bottom-100 left-4 md:bottom-64 md:left-20 z-20 max-w-xl">
+        className="absolute bottom-100 left-4 md:bottom-80 md:left-20 z-20 max-w-xl">
         <VideoTitle title={mainMovie.title} overview={mainMovie.overview} />
       </div>
 
