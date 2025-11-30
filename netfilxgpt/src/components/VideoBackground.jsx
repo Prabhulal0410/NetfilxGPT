@@ -18,7 +18,7 @@ const VideoBackground = ({ movieId }) => {
       className="
       relative w-full 
       h-[100vh]        /* FULL mobile height like Netflix */
-      md:h-[90vh]      /* desktop height unchanged */
+      md:h-[100vh]      /* desktop height unchanged */
       overflow-hidden bg-black
     "
     >

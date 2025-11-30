@@ -68,11 +68,10 @@ const Header = () => {
           {/* Desktop Navigation */}
           {user && (
             <nav className="hidden sm:flex gap-4 lg:gap-6 text-white font-medium text-sm">
-              <button className="hover:text-gray-300">Home</button>
-              <button className="hover:text-gray-300">Shows</button>
-              <button className="hover:text-gray-300">Movies</button>
-              <button className="hover:text-gray-300">New & Popular</button>
-              <button className="hover:text-gray-300">My List</button>
+              <button className="hover:text-gray-300">Now Playing</button>
+              <button className="hover:text-gray-300">Popular</button>
+              <button className="hover:text-gray-300">Top Rated</button>
+              <button className="hover:text-gray-300">Upcoming</button>
             </nav>
           )}
         </div>
