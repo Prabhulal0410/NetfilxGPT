@@ -16,7 +16,7 @@ const Header = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showMenu, setShowMenu] = useState(false); // Mobile dropdown
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 100);
@@ -50,13 +50,12 @@ const Header = () => {
 
   return (
     <header
-  className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300
-    ${isScrolled ? "bg-black" : "bg-transparent"}
-  `}
->
-
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300
+        ${isScrolled ? "bg-black" : "bg-transparent"}
+      `}
+    >
       <div className="flex items-center justify-between px-4 sm:px-16 py-2 sm:py-2">
-        {/* Logo + Nav */}
+        {/* Logo + Navigation */}
         <div className="flex items-center gap-6 sm:gap-10">
           <img
             src={LOGO}
@@ -76,13 +75,14 @@ const Header = () => {
           )}
         </div>
 
-        {/* Right Side */}
+        {/* RIGHT SIDE */}
         {user && (
-          <div className="flex items-center gap-4 sm:gap-6 text-white relative">
-            {/* Language selector only on desktop */}
+          <div className="flex items-center gap-3 sm:gap-6 text-white relative">
+            {/* 🌐 LANGUAGE SELECTOR (Now visible on Mobile + Desktop) */}
             {showGptSearch && (
               <select
-                className="hidden sm:block bg-black/70 text-white border border-white/20 px-3 py-1.5 rounded-md backdrop-blur-sm hover:border-white/40 transition"
+                className="block bg-black/70 text-white border border-white/20 px-3 py-1.5 
+                           rounded-md backdrop-blur-sm hover:border-white/40 transition text-sm"
                 onChange={handleLangChange}
               >
                 {SUPPORTED_LANGUAGES.map((lang) => (
@@ -97,7 +97,7 @@ const Header = () => {
               </select>
             )}
 
-            {/* GPT Search Button */}
+            {/* GPT Search / Home Button */}
             <button
               className="px-3 sm:px-4 py-1.5 rounded-md font-medium
                 bg-white/10 text-white border border-white/20

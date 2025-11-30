@@ -68,19 +68,19 @@ const GptSearchBar = () => {
       <div className="absolute inset-0 bg-linear-to-b from-black/10 to-black/5"></div>
 
       {/* Content Layer */}
-      <div className="relative z-20 w-full flex flex-col items-center mt-40">
+      <div className="relative z-20 w-full flex flex-col items-center mt-48">
         {/* 🔍 Search Bar */}
         <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder={lang[langKey].gptSearchPlaceholder}
-            className="grow bg-black/60 text-white px-4 py-3 rounded-l-md border border-gray-600 focus:outline-none focus:border-white"
+            className="grow bg-black/80 text-white px-4 py-3 rounded-l-md border border-gray-600 focus:outline-none focus:border-white"
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
 
           <button
-            className="bg-red-600 px-6 py-3 text-white font-semibold rounded-r-md hover:bg-red-700 transition duration-200"
+            className="bg-red-600 px-6 py-3 text-white font-semibold rounded-r-md hover:bg-red-700 transition duration-200 cursor-pointer"
             type="submit"
           >
             {lang[langKey].search}
