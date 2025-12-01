@@ -5,14 +5,14 @@ import { model } from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieresult } from "../utils/searchSlice";
 import GptMovieSuggestion from "./GptMovieSuggestion";
-import ShimmerMovieRow from "./ShimmerMovieRow";   
+import ShimmerMovieRow from "./ShimmerMovieRow";
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);  
+  const [loading, setLoading] = useState(false);
 
   const searchMovieTmdb = async (movie) => {
     const data = await fetch(
@@ -29,30 +29,35 @@ const GptSearchBar = () => {
     e.preventDefault();
     if (!input) return;
 
-    setLoading(true); // ⭐ START SHIMMER
+    setLoading(true);
 
     try {
       const query = `
-        Act as a movie recommendation system.
-        Suggest some movies for the query: "${input}"
-        Only give exactly 5 movies.
-        Comma-separated output only.
-      `;
+      Act as a movie recommendation system.
+      Suggest some movies for the query: "${input}"
+      Only give exactly 5 movies.
+      Comma-separated output only.
+    `;
 
       const res = await model.generateContent(query);
-      const movienames = res.response.text().trim()
+      const movienames = res.response
+        .text()
+        .trim()
         .split(",")
         .map((m) => m.trim());
 
       const promiseArray = movienames.map((movie) => searchMovieTmdb(movie));
       const tmdbresult = await Promise.all(promiseArray);
 
-      dispatch(addGptMovieresult({ movieNames: movienames, movieResult: tmdbresult }));
+      dispatch(
+        addGptMovieresult({ movieNames: movienames, movieResult: tmdbresult })
+      );
     } catch (err) {
       console.error("Gemini API Error:", err);
     }
 
-    setLoading(false); 
+    setInput("");
+    setLoading(false);
   };
 
   return (
@@ -69,9 +74,8 @@ const GptSearchBar = () => {
 
       {/* Content Layer */}
       <div className="relative z-20 w-full flex flex-col items-center mt-48">
-
         {/* Search Bar */}
-        <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
+        <form className="flex w-full max-w-2xl px-4" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder={lang[langKey].gptSearchPlaceholder}
@@ -81,7 +85,7 @@ const GptSearchBar = () => {
           />
 
           <button
-            className="bg-red-600 px-6 py-3 text-white font-semibold rounded-r-md hover:bg-red-700 transition duration-200 cursor-pointer"
+            className="bg-red-600 px-8 py-3 text-white font-semibold rounded-r-md hover:bg-red-700 transition duration-200 cursor-pointer"
             type="submit"
           >
             {lang[langKey].search}
