@@ -1,9 +1,8 @@
+import React from "react";
 
 const ShimmerMovieRow = () => {
   return (
     <div className="pl-1 md:pl-14">
-      {/* Title Shimmer */}
-      <div className="h-5 w-40 bg-gray-700/50 rounded-md mb-3 animate-pulse"></div>
 
       {/* Horizontal Shimmer Cards */}
       <div className="flex gap-3 overflow-x-scroll no-scrollbar pb-3 flex-nowrap">
@@ -12,9 +11,25 @@ const ShimmerMovieRow = () => {
           .map((_, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-[150px] h-[225px] md:w-[165px] md:h-[250px]
-                         rounded-md bg-gray-800/40 animate-pulse"
-            ></div>
+              className="
+                flex-shrink-0 
+                w-[150px] h-[225px] md:w-[165px] md:h-[250px]
+                rounded-md overflow-hidden 
+                relative
+                bg-[#1a1a1a]
+              "
+            >
+              {/* Dark base layer */}
+              <div className="absolute inset-0 bg-[#1a1a1a]"></div>
+
+              {/* Glossy shimmer effect */}
+              <div className="
+                absolute inset-0 
+                animate-[shimmer_1.5s_infinite]
+                bg-gradient-to-r 
+                from-transparent via-[rgba(255,255,255,0.08)] to-transparent
+              "></div>
+            </div>
           ))}
       </div>
     </div>

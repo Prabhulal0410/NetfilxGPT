@@ -5,12 +5,14 @@ import { model } from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieresult } from "../utils/searchSlice";
 import GptMovieSuggestion from "./GptMovieSuggestion";
+import ShimmerMovieRow from "./ShimmerMovieRow";   
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);  
 
   const searchMovieTmdb = async (movie) => {
     const data = await fetch(
@@ -27,32 +29,30 @@ const GptSearchBar = () => {
     e.preventDefault();
     if (!input) return;
 
-    const query = `
-      Act as a movie recommendation system.
-      Suggest some movies for the query: "${input}"
-      Only give exactly 5 movies.
-      Only comma-separated values.
-      Example format: hello,ninja,harry potter,black,dark
-    `;
+    setLoading(true); // ⭐ START SHIMMER
 
     try {
+      const query = `
+        Act as a movie recommendation system.
+        Suggest some movies for the query: "${input}"
+        Only give exactly 5 movies.
+        Comma-separated output only.
+      `;
+
       const res = await model.generateContent(query);
-      const movienames = res.response.text().trim();
-
-      const movieArray = movienames
+      const movienames = res.response.text().trim()
         .split(",")
-        .map((m) => m.trim())
-        .filter((m) => m.length > 0);
+        .map((m) => m.trim());
 
-      const promiseArray = movieArray.map((movie) => searchMovieTmdb(movie));
+      const promiseArray = movienames.map((movie) => searchMovieTmdb(movie));
       const tmdbresult = await Promise.all(promiseArray);
 
-      dispatch(
-        addGptMovieresult({ movieNames: movieArray, movieResult: tmdbresult })
-      );
+      dispatch(addGptMovieresult({ movieNames: movienames, movieResult: tmdbresult }));
     } catch (err) {
       console.error("Gemini API Error:", err);
     }
+
+    setLoading(false); 
   };
 
   return (
@@ -69,7 +69,8 @@ const GptSearchBar = () => {
 
       {/* Content Layer */}
       <div className="relative z-20 w-full flex flex-col items-center mt-48">
-        {/* 🔍 Search Bar */}
+
+        {/* Search Bar */}
         <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
           <input
             type="text"
@@ -87,9 +88,16 @@ const GptSearchBar = () => {
           </button>
         </form>
 
-        {/* 🎬 GPT Movie Suggestions */}
+        {/* Suggestions OR Shimmer */}
         <div className="w-full px-6 mt-10">
-          <GptMovieSuggestion />
+          {loading ? (
+            <>
+              <ShimmerMovieRow />
+              <ShimmerMovieRow />
+            </>
+          ) : (
+            <GptMovieSuggestion />
+          )}
         </div>
       </div>
     </div>
