@@ -12,7 +12,7 @@ const ShimmerMovieRow = () => {
             <div
               key={i}
               className="
-                flex-shrink-0 
+                shrink-0 
                 w-[150px] h-[225px] md:w-[165px] md:h-[250px]
                 rounded-md overflow-hidden 
                 relative
@@ -26,7 +26,7 @@ const ShimmerMovieRow = () => {
               <div className="
                 absolute inset-0 
                 animate-[shimmer_1.5s_infinite]
-                bg-gradient-to-r 
+                bg-linear-to-r 
                 from-transparent via-[rgba(255,255,255,0.08)] to-transparent
               "></div>
             </div>
