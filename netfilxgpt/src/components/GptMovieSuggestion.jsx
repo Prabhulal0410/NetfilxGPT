@@ -15,7 +15,7 @@ const { movieResult, movieNames } = useSelector(store => store.gpt);
         <MovieList
           key={movieName + index}
           title={movieName}
-          movies={movieResult?.[index] || []} // also safe check
+          movies={movieResult?.[index] || []} 
         />
       ))}
     </>

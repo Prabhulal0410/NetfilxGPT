@@ -6,7 +6,7 @@ const MovieCard = ({ imagePoster }) => {
 
   return (
     <div
-      className="flex-shrink-0 w-[150px] h-[225px] md:w-[165px] md:h-[250px]
+      className="shrink-0 w-[150px] h-[225px] md:w-[165px] md:h-[250px]
                  rounded-md overflow-hidden cursor-pointer
                  transition-transform duration-300 hover:scale-110"
     >

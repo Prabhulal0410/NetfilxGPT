@@ -9,7 +9,7 @@ const MainContainer = () => {
   const mainMovie = movies[0];
 
   return (
-    <div className="relative w-full z-0 mt-[-10px] md:mt-0 overflow-hidden">
+    <div className="relative w-full z-0 -mt-2.5 md:mt-0 overflow-hidden">
       <VideoBackground movieId={mainMovie.id} />
 
       <div
