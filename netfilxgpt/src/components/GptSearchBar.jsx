@@ -39,12 +39,18 @@ const GptSearchBar = () => {
       Comma-separated output only.
     `;
 
-      const res = await model.generateContent(query);
-      const movienames = res.response
-        .text()
-        .trim()
-        .split(",")
-        .map((m) => m.trim());
+      const response = await fetch("/api/gemini", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ prompt: query }),
+});
+
+const data = await response.json();
+const movienames = data.text
+  .trim()
+  .split(",")
+  .map((m) => m.trim());
+
 
       const promiseArray = movienames.map((movie) => searchMovieTmdb(movie));
       const tmdbresult = await Promise.all(promiseArray);
