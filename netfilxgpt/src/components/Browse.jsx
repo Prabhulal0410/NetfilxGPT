@@ -5,9 +5,10 @@ import SecondaryContainer from "./SecondaryContainer";
 import usePopularMovies from "../hooks/usePopularMovies";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
-import GPTsearch from "./GPTsearch";
+import Gptsearch from "./Gptsearch";
 import { useSelector } from "react-redux";
 import Footer from "./Footer";
+
 
 const Browse = () => {
   // Select the correct state key → store.gpt.showGptSearch
@@ -22,7 +23,7 @@ const Browse = () => {
     <div className="relative bg-black min-h-screen">
       <Header />
       {showGptSearch ? (
-        <GPTsearch />
+        <Gptsearch />
       ) : (
         <>
           <MainContainer />
