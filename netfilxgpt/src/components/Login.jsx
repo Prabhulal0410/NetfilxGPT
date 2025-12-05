@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // inline loader
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -39,9 +39,8 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length > 0) return;
 
-    setLoading(true); // start inline loader
+    setLoading(true);
 
-    // SIGN UP
     if (!isSignInForm) {
       createUserWithEmailAndPassword(
         auth,
@@ -94,7 +93,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative w-full h-screen text-white font-sans">
+    <div className="relative w-full h-screen text-white font-sans overflow-hidden">
       <img
         src="/loginpagebg.jpg"
         alt="Login background"
@@ -104,13 +103,26 @@ const Login = () => {
 
       <Header />
 
+      {/* MAIN CONTAINER - centered on all screens */}
       <div className="absolute inset-0 flex justify-center items-center z-10 px-4 sm:px-6">
-        <div className="bg-black/70 backdrop-blur-md p-8 sm:p-10 md:p-12 rounded-lg w-full max-w-sm sm:max-w-md shadow-2xl">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center">
+        
+        {/* RESPONSIVE CARD */}
+        <div
+          className="
+            bg-black/70 backdrop-blur-md 
+            p-6 sm:p-8 md:p-10 
+            rounded-lg 
+            w-full 
+            max-w-[90%] sm:max-w-sm md:max-w-md 
+            shadow-2xl 
+            mx-auto
+          "
+        >
+          <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
 
-          <form className="flex flex-col gap-4 sm:gap-5">
+          <form className="flex flex-col gap-4">
             {!isSignInForm && (
               <div>
                 <input
@@ -225,4 +237,3 @@ const Login = () => {
 };
 
 export default Login;
-

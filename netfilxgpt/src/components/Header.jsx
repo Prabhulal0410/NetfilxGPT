@@ -66,7 +66,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           {user && (
-            <nav className="hidden sm:flex gap-4 lg:gap-6 text-white font-medium text-sm">
+            <nav className="hidden lg:flex gap-4 lg:gap-6 text-white font-medium text-sm">
               <button className="hover:text-gray-300">Now Playing</button>
               <button className="hover:text-gray-300">Popular</button>
               <button className="hover:text-gray-300">Top Rated</button>
