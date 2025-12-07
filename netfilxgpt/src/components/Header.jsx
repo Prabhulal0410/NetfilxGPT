@@ -105,7 +105,7 @@ const Header = () => {
                 backdrop-blur-md transition-all duration-200 cursor-pointer text-sm sm:text-base"
               onClick={handleGptSearch}
             >
-              {showGptSearch ? "Home Page" : "GPT Search"}
+              {showGptSearch ? "Home" : "GPT Search"}
             </button>
 
             {/* Avatar */}
