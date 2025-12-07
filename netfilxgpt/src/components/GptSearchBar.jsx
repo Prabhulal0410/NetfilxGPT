@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import lang from "../utils/languageConstant";
 import { useDispatch, useSelector } from "react-redux";
-import { model } from "../utils/gemini";
-import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieresult } from "../utils/searchSlice";
 import GptMovieSuggestion from "./GptMovieSuggestion";
 import ShimmerMovieRow from "./ShimmerMovieRow";
@@ -19,7 +17,13 @@ const GptSearchBar = () => {
       "https://api.themoviedb.org/3/search/movie?query=" +
         movie +
         "&include_adult=false&language=en-US&page=1",
-      API_OPTIONS
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: "Bearer " + import.meta.env.VITE_TMDB_KEY,
+        },
+      }
     );
     const json = await data.json();
     return json.results;
@@ -33,30 +37,39 @@ const GptSearchBar = () => {
 
     try {
       const query = `
-      Act as a movie recommendation system.
-      Suggest some movies for the query: "${input}"
-      Only give exactly 5 movies.
-      Comma-separated output only.
-    `;
+        Act as a movie recommendation system.
+        Suggest exactly 5 movies for the query: "${input}".
+        Output should be comma-separated movie names ONLY. No numbering.
+      `;
 
       const response = await fetch("/api/gemini", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ prompt: query }),
-});
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: query }),
+      });
 
-const data = await response.json();
-const movienames = data.text
-  .trim()
-  .split(",")
-  .map((m) => m.trim());
+      const data = await response.json();
 
+      if (!data.text || typeof data.text !== "string") {
+        console.error("Invalid Gemini Response:", data);
+        setLoading(false);
+        return;
+      }
+
+      const movienames = data.text
+        .trim()
+        .split(",")
+        .map((m) => m.trim())
+        .filter((m) => m.length > 0);
 
       const promiseArray = movienames.map((movie) => searchMovieTmdb(movie));
       const tmdbresult = await Promise.all(promiseArray);
 
       dispatch(
-        addGptMovieresult({ movieNames: movienames, movieResult: tmdbresult })
+        addGptMovieresult({
+          movieNames: movienames,
+          movieResult: tmdbresult,
+        })
       );
     } catch (err) {
       console.error("Gemini API Error:", err);
@@ -68,19 +81,15 @@ const movienames = data.text
 
   return (
     <div className="relative w-full min-h-screen flex flex-col items-center">
-      {/* Background Image */}
       <img
         src="/loginpagebg.jpg"
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-linear-to-b from-black/10 to-black/5"></div>
 
-      {/* Content Layer */}
       <div className="relative z-20 w-full flex flex-col items-center mt-48">
-        {/* Search Bar */}
         <form className="flex w-full max-w-2xl px-4" onSubmit={handleSearch}>
           <input
             type="text"
@@ -98,7 +107,6 @@ const movienames = data.text
           </button>
         </form>
 
-        {/* Suggestions OR Shimmer */}
         <div className="w-full px-6 mt-10">
           {loading ? (
             <>
