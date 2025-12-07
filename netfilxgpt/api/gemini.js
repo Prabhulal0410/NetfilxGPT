@@ -16,12 +16,10 @@ export default async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash", // <<--- ⭐ USE THIS
     });
 
     const result = await model.generateContent(prompt);
-
-    // sometimes response.text() is undefined
     const text = result?.response?.text?.() || "";
 
     return res.status(200).json({ text });
