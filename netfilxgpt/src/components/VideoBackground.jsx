@@ -17,7 +17,7 @@ const VideoBackground = ({ movieId }) => {
   const isAndroid = /Android/i.test(navigator.userAgent);
 
   return (
-    <div className="relative w-full h-[100vh] md:h-[100vh] overflow-hidden bg-black">
+    <div className="relative w-full h-screen md:h-[screen overflow-hidden bg-black">
       
       {/* MOBILE: iPhone / Android */}
       <div
@@ -49,7 +49,7 @@ const VideoBackground = ({ movieId }) => {
       </div>
 
       {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
     </div>
   );
 };
