@@ -7,7 +7,7 @@ Browse trending movies, explore curated lists, and search effortlessly within a 
 ---
 
 [![React](https://img.shields.io/badge/React-19.0-blue?logo=react&logoColor=white)](https://reactjs.org/) 
-[![Vite](https://img.shields.io/badge/Vite-7.0-green?logo=vite)](https://vitejs.dev/) 
+[![Vite](https://img.shields.io/badge/Vite-7.2-green?logo=vite)](https://vitejs.dev/) 
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0-blue?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) 
 [![Firebase](https://img.shields.io/badge/Firebase-Auth-yellow?logo=firebase&logoColor=white)](https://firebase.google.com/) 
 [![TMDB](https://img.shields.io/badge/TMDB-API-lightgrey)](https://www.themoviedb.org/) 
