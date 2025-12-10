@@ -19,7 +19,7 @@ const ShimmerMovieRow = () => {
               "
             >
               {/* Base layer */}
-              <div className="absolute inset-0 bg-gradient-to-b from-gray-800/80 via-gray-900/90 to-black/95"></div>
+              <div className="absolute inset-0 bg-linear-to-b from-gray-800/80 via-gray-900/90 to-black/95"></div>
 
               {/* Shimmer effect */}
               <div
