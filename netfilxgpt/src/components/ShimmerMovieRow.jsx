@@ -26,7 +26,7 @@ const ShimmerMovieRow = () => {
                 className="
                   absolute inset-0 
                   animate-[shimmer_1.5s_infinite]
-                  bg-gradient-to-r 
+                  bg-linear-to-r 
                   from-transparent via-gray-600/30 to-transparent
                 "
                 style={{ animationDelay: `${i * 0.1}s` }}
