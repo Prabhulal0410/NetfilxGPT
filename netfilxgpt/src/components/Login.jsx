@@ -103,7 +103,7 @@ const Login = () => {
 
       <Header />
 
-      {/* MAIN CONTAINER - centered on all screens */}
+      {/* MAIN CONTAINER */}
       <div className="absolute inset-0 flex justify-center items-center z-10 px-4 sm:px-6">
         
         {/* RESPONSIVE CARD */}
