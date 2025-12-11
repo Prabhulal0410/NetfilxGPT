@@ -13,6 +13,9 @@ import { addUser } from "../utils/userSlice";
 import toast from "react-hot-toast";
 
 const Login = () => {
+
+  document.title = "Login – NetflixGPT";//for seo purpose
+
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
