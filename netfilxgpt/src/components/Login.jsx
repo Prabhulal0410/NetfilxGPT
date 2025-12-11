@@ -14,7 +14,6 @@ import toast from "react-hot-toast";
 
 const Login = () => {
 
-  document.title = "Login – NetflixGPT";//for seo purpose
 
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errors, setErrors] = useState({});
@@ -24,6 +23,14 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+
+    // ⭐ CSR SEO: dynamic title
+  useEffect(() => {
+    document.title = isSignInForm
+      ? "Login – NetflixGPT"
+      : "Create Account – NetflixGPT";
+  }, [isSignInForm]);
+
 
   const toggleSignInForm = () => setIsSignInForm(!isSignInForm);
 
