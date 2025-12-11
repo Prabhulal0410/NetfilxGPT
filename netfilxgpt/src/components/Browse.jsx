@@ -8,11 +8,15 @@ import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
 import Footer from "./Footer";
-
+import { useEffect } from "react";
 
 const Browse = () => {
-  // Select the correct state key → store.gpt.showGptSearch
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+
+  // ⭐ CSR SEO: change page title dynamically
+  useEffect(() => {
+    document.title = "Browse – NetflixGPT";
+  }, []);
 
   useNowPlayingMovies();
   usePopularMovies();
