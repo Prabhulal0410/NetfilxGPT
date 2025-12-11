@@ -51,38 +51,62 @@ const Header = () => {
   const handleLangChange = (e) => dispatch(changeLanguage(e.target.value));
 
   return (
+    // ⭐ SEO: semantic <header> + ARIA banner role
     <header
+      role="banner"
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300
         ${isScrolled ? "bg-black" : "bg-transparent"}
       `}
     >
       <div className="flex items-center justify-between px-4 sm:px-16 py-2 sm:py-2">
-        {/* Logo + Navigation */}
-        <div className="flex items-center gap-6 sm:gap-10">
+        
+        {/* LOGO + NAVIGATION GROUP */}
+        {/* ⭐ SEO: wrapping inside nav with aria-label */}
+        <nav
+          role="navigation"
+          aria-label="Main Navigation"
+          className="flex items-center gap-6 sm:gap-10"
+        >
           <img
             src={LOGO}
-            alt="Netflix Logo"
+            alt="NetflixGPT Logo"   // ⭐ Improved alt text for SEO
             className="w-24 sm:w-32 lg:w-44 object-contain cursor-pointer"
             onClick={() => navigate("/Browse")}
           />
 
           {/* Desktop Navigation */}
           {user && (
-            <nav className="hidden lg:flex gap-4 lg:gap-6 text-white font-medium text-sm">
-              <button className="hover:text-gray-300">Now Playing</button>
-              <button className="hover:text-gray-300">Popular</button>
-              <button className="hover:text-gray-300">Top Rated</button>
-              <button className="hover:text-gray-300">Upcoming</button>
-            </nav>
+            <ul
+              role="menubar" // ⭐ Semantic menu role
+              className="hidden lg:flex gap-4 lg:gap-6 text-white font-medium text-sm"
+            >
+              <li role="menuitem">
+                <button className="hover:text-gray-300">Now Playing</button>
+              </li>
+              <li role="menuitem">
+                <button className="hover:text-gray-300">Popular</button>
+              </li>
+              <li role="menuitem">
+                <button className="hover:text-gray-300">Top Rated</button>
+              </li>
+              <li role="menuitem">
+                <button className="hover:text-gray-300">Upcoming</button>
+              </li>
+            </ul>
           )}
-        </div>
+        </nav>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT SECTION */}
         {user && (
-          <div className="flex items-center gap-3 sm:gap-6 text-white relative">
-            {/* 🌐 LANGUAGE SELECTOR (Now visible on Mobile + Desktop) */}
+          <div
+            className="flex items-center gap-3 sm:gap-6 text-white relative"
+            role="group"
+            aria-label="User Actions"  // ⭐ Adds semantic label
+          >
+            {/* LANG SELECT (shows only in GPT mode) */}
             {showGptSearch && (
               <select
+                aria-label="Select Language"  // ⭐ SEO accessibility tag
                 className="block bg-black/70 text-white border border-white/20 px-3 py-1.5 
                            rounded-md backdrop-blur-sm hover:border-white/40 transition text-sm"
                 onChange={handleLangChange}
@@ -99,8 +123,9 @@ const Header = () => {
               </select>
             )}
 
-            {/* GPT Search / Home Button */}
+            {/* GPT Search Button */}
             <button
+              aria-label="Toggle GPT Search"  // ⭐ screen readers + SEO
               className="px-3 sm:px-4 py-1.5 rounded-md font-medium
                 bg-white/10 text-white border border-white/20
                 hover:bg-white/20 hover:border-white/40
@@ -110,10 +135,10 @@ const Header = () => {
               {showGptSearch ? "Home" : "GPT Search"}
             </button>
 
-            {/* Avatar */}
+            {/* USER AVATAR */}
             <img
               src="/userlogo.png"
-              alt="User"
+              alt="User Profile Avatar"   // ⭐ better SEO alt
               className="w-8 h-8 rounded-md object-cover
                 border border-white/20 hover:border-white/40
                 transition cursor-pointer"
@@ -122,8 +147,12 @@ const Header = () => {
 
             {/* Mobile Dropdown */}
             {showMenu && (
-              <div className="absolute right-0 top-10 w-24 bg-black/95 border border-white/20 rounded-md shadow-lg py-2 sm:hidden animate-fadeIn z-50">
+              <div
+                role="menu"    // ⭐ semantic menu
+                className="absolute right-0 top-10 w-24 bg-black/95 border border-white/20 rounded-md shadow-lg py-2 sm:hidden animate-fadeIn z-50"
+              >
                 <button
+                  role="menuitem"   // ⭐ accessibility role
                   onClick={handleSignOut}
                   className="w-full text-center px-1 py-1 text-sm text-red-500 font-bold hover:bg-red-600/20 transition"
                 >
@@ -134,6 +163,7 @@ const Header = () => {
 
             {/* Desktop Sign Out */}
             <button
+              aria-label="Sign Out"   // ⭐ explicit ARIA
               className="hidden sm:block px-3 py-1.5 rounded-md text-sm font-semibold
                 bg-linear-to-r from-red-600 via-red-700 to-red-800
                 hover:from-red-700 hover:via-red-800 hover:to-red-900
