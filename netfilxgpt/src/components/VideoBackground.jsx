@@ -47,9 +47,7 @@ const VideoBackground = ({ movieId }) => {
               allow="autoplay; encrypted-media"
               allowFullScreen={false}
               sandbox="allow-same-origin allow-scripts allow-presentation allow-popups"
-              className="absolute top-1/2 left-1/2 w-[180vw] h-[60vh]
-                         -translate-x-1/2 -translate-y-1/2 object-cover scale-[1.8]
-                         pointer-events-none"
+              className="absolute top-1/2 left-1/2 w-[180vw] h-[60vh] -translate-x-1/2 -translate-y-1/2 object-cover scale-[1.8] pointer-events-none"
             ></iframe>
           </div>
 
@@ -62,8 +60,7 @@ const VideoBackground = ({ movieId }) => {
               allow="autoplay; encrypted-media"
               allowFullScreen={false}
               sandbox="allow-same-origin allow-scripts allow-presentation allow-popups"
-              className="absolute top-1/2 left-1/2 w-[150vw] h-[150vh]
-                         -translate-x-1/2 -translate-y-1/2 object-cover pointer-events-none"
+              className="absolute top-1/2 left-1/2 w-[150vw] h-[150vh] -translate-x-1/2 -translate-y-1/2 object-cover pointer-events-none"
             ></iframe>
           </div>
         </>
