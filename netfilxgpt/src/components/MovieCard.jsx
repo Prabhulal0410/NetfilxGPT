@@ -7,9 +7,7 @@ const MovieCard = ({ imagePoster, movie }) => {
   return (
     <div
       role="listitem"
-      className="shrink-0 w-[150px] h-[225px] md:w-[165px] md:h-[250px]
-                 rounded-md overflow-hidden cursor-pointer transition-transform
-                 duration-300 hover:scale-110"
+      className="shrink-0 w-[150px] h-[225px] md:w-[165px] md:h-[250px] rounded-md overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-110"
     >
       <img
         loading="lazy"
