@@ -15,9 +15,9 @@ The main project is inside the [`netfilxgpt`](./netfilxgpt) folder. Click the fo
 
 ### 🔹 Highlights  
 
-- 🎥 Movie Browsing (Now Playing, Popular, Top Rated, Upcoming)  
+- 🎥 Movie Browsing 
 - 🤖 AI Movie Search using Google Gemini  
-- 🌐 Multi-Language Support (English, Hindi, Spanish)  
+- 🌐 Multi-Language Support
 - 🔐 Firebase Authentication  
 - ⚡ Responsive UI built with React + Vite + Tailwind  
 - ☁️ SPA Deployment on Vercel  
